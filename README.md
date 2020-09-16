@@ -1,3 +1,6 @@
 # LeetCode_LearningPath
 this is the leetcode script
-202000914 from pepper
+👇这些为了打卡而没有做题的日子
+20200914
+20200916
+from pepper
