@@ -9,8 +9,6 @@ import imutils
 import dlib
 import cv2
 
-
-
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--shape-predictor", required=True,
