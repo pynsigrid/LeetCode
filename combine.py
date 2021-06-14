@@ -5,7 +5,7 @@ class Solution:
             if len(tmp) == k:
                 res.append(tmp[:])
                 return
-            for i in range(idx, n-k+2):
+            for i in range(idx, n-k+2+len(tmp)):
                 print(f'i = {i}')
                 tmp.append(i)
                 addElement(n, k, i+1)
