@@ -7,13 +7,8 @@ class Solution:
         def addElement(candidates, csum):
             if csum == target:
                 res.append(tmp[:])
-                # csum = 0
                 return
             elif csum > target:
-            # elif csum > target or len(candidates) <= 1:
-                # addElement(candidates[1:], 0)
-                # candidates = candidates[1:]
-                # csum = 0
                 return
             else:
                 for i in candidates:  
