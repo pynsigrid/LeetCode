@@ -13,7 +13,8 @@ class Solution:
                 # 剪枝
                 # if candidates[i]+csum > target: return
                 # 去重
-                if i>0 and candidates[i]==candidates[i-1] and not used[i]: continue
+                if i>0 and candidates[i]==candidates[i-1] and not used[i]: 
+                    continue
                 tmp.append(candidates[i])
                 csum += candidates[i]
                 used[i] = True
