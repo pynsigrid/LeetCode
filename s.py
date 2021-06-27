@@ -1,34 +1,42 @@
 from typing import List
-
-class Solution:
-    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        res, tmp = [], []
-        csum = 0
-        def addElement(candidates, csum):
-            if csum == target:
-                res.append(tmp[:])
-                return
-            elif csum > target:
-                return
-            else:
-                for i in candidates:  
-                    tmp.append(i)
-                    csum += i
-                    addElement(candidates, csum)
-                    candidates = candidates[1:]
-                    tmp.pop()
-                    csum -= i
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
         
-        addElement(candidates, 0)
-        return res
+class Solution(object):
+    def inorderTraversal(self, TreeNode):
+        def dfs(bt, in_order):
+            if not bt: return
+            print(in_order)
+            dfs(bt.left, in_order)
+            in_order.append(bt.val)
+            dfs(bt.right, in_order)
+            return 
+        in_order = []
+#         bt = TreeNode
+        dfs(TreeNode, in_order)
+        return in_order
+    
 
 def main():
     
-    candidates = [2,3,5]
-    target = 8
+    bt1 = TreeNode(1, None, None)
+    bt2 = TreeNode(2, None, None)
+    bt3 = TreeNode(3, None, None)
+    bt4 = TreeNode(4, None, None)
+    bt5 = TreeNode(5, None, None)
+    bt6 = TreeNode(6, None, None)
+    bt7 = TreeNode(7, None, None)
+
+    bt1.left, bt1.right = bt2, bt3
+    bt2.left, bt2.right = bt4, bt5
+    bt3.left, bt3.right = bt6, bt7
 
     a = Solution()
-    res = a.combinationSum(candidates, target)
+    res = a.inorderTraversal(bt1)
     print(res)
 
 if __name__ == '__main__':
