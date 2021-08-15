@@ -20,26 +20,6 @@
 # res = a.exchange(3)
 # print(res)
 
-
-class Solution:
-    def isSubStructure(self, A, B):
-        def treeMatch(A, B):
-            if not B: return True
-            if not A or A.val!=B.val: return False
-            return treeMatch(A.left, B.left) and treeMatch(A.right, B.right)
-        
-        def treeIncludeSub(A, B):
-            if not A: return False
-            if A.val==B.val: 
-                if treeMatch(A, B): return True
-            if A.left:
-                if treeIncludeSub(A.left, B): return True
-            if A.right:
-                if treeIncludeSub(A.right, B): return True
-            # return False
-        if not B: return False
-        return treeIncludeSub(A, B)
-
 # Definition for a binary tree node.
 class TreeNode(object):
     def __init__(self, x):
@@ -47,30 +27,38 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
-# class Solution:
-#     def isSubStructure(self, A, B):
-#         def recur(A, B):
-#             if not B: return True
-#             if not A or A.val != B.val: return False
-#             return recur(A.left, B.left) and recur(A.right, B.right)
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        def dfs(l, r):
+            if not l and not r: return True
+            if not l or not r or l.val!=r.val: return False
+            # if l.left and r.right:
+            #     if dfs(l.left, r.right): 
+            #         return True
+            #     else:
+            #         return False
+            # if l.right and r.left:
+            #     if dfs(l.right, r.left): 
+            #         return True
+            #     else:
+            #         return False
+            # # return False
+            return dfs(l.left, r.right) and dfs(l.right, r.left)
+        if not root: return True
+        return dfs(root.left, root.right)
 
-#         return bool(A and B) and (recur(A, B) or self.isSubStructure(A.left, B) or self.isSubStructure(A.right, B))
-
-
-t1 = TreeNode(3)
-t2 = TreeNode(4)
-t3 = TreeNode(5)
-t4 = TreeNode(1)
-t5 = TreeNode(2)
-t1.left = t2
-t1.right = t3
-t2.left = t4
-t2.right = t5
-
-b1 = TreeNode(5)
-# b2 = TreeNode(1)
-# b1.left = b2
+t1 = TreeNode(1)
+t2 = TreeNode(2)
+t3 = TreeNode(2)
+t4 = TreeNode(3)
+t5 = TreeNode(4)
+t6 = TreeNode(4)
+t7 = TreeNode(3)
+t1.left, t1.right = t2, t3
+t2.left, t2.right = t4, t5
+t3.left, t3.right = t6, t7
 
 a = Solution()
-res = a.isSubStructure(t1, b1)
+res = a.isSymmetric(t1)
 print(res)
+# res.left.right.val
