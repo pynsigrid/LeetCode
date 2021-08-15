@@ -20,37 +20,57 @@
 # res = a.exchange(3)
 # print(res)
 
-# Definition for singly-linked list.
-class ListNode(object):
+
+class Solution:
+    def isSubStructure(self, A, B):
+        def treeMatch(A, B):
+            if not B: return True
+            if not A or A.val!=B.val: return False
+            return treeMatch(A.left, B.left) and treeMatch(A.right, B.right)
+        
+        def treeIncludeSub(A, B):
+            if not A: return False
+            if A.val==B.val: 
+                if treeMatch(A, B): return True
+            if A.left:
+                if treeIncludeSub(A.left, B): return True
+            if A.right:
+                if treeIncludeSub(A.right, B): return True
+            # return False
+        if not B: return False
+        return treeIncludeSub(A, B)
+
+# Definition for a binary tree node.
+class TreeNode(object):
     def __init__(self, x):
         self.val = x
-        self.next = None
+        self.left = None
+        self.right = None
 
-class Solution(object):
-    def reverseList(self, head):
-        """
-        :type head: ListNode
-        :rtype: ListNode
-        """
-        # 终止条件
-        if head == None or head.next == None: return head
-        cur = self.reverseList(head.next)  # 最终找到新的头节点
-        print(head.val, cur.val)
-        head.next.next = head
-        head.next = None
-        return cur
+# class Solution:
+#     def isSubStructure(self, A, B):
+#         def recur(A, B):
+#             if not B: return True
+#             if not A or A.val != B.val: return False
+#             return recur(A.left, B.left) and recur(A.right, B.right)
 
-l1, l2 = ListNode(1), ListNode(2)
-l3, l4 = ListNode(3), ListNode(4)
-l5, l6 = ListNode(5), ListNode(6)
-# l1
-l5.next = l6
-l4.next = l5
-l3.next = l4
-l2.next = l3
-l1.next = l2
+#         return bool(A and B) and (recur(A, B) or self.isSubStructure(A.left, B) or self.isSubStructure(A.right, B))
 
+
+t1 = TreeNode(3)
+t2 = TreeNode(4)
+t3 = TreeNode(5)
+t4 = TreeNode(1)
+t5 = TreeNode(2)
+t1.left = t2
+t1.right = t3
+t2.left = t4
+t2.right = t5
+
+b1 = TreeNode(5)
+# b2 = TreeNode(1)
+# b1.left = b2
 
 a = Solution()
-res = a.reverseList(l1)
-print(l1.next.next.val)
+res = a.isSubStructure(t1, b1)
+print(res)
