@@ -1,64 +1,26 @@
-# class Solution(object):
-    
-#     def exchange(self, nums):
-#         res, tmp = [], []
-#         def recursion(n):
-#             if n <= 1:
-#                 tmp = ['()']
-#                 return ['()']
-                
-#             # r = recursion(n-1)
-#             # print(r)
-#             for i in recursion(n-1):
-#                 res.append('('+i+')')
-#                 res.append('()'+i)
-#                 res.append(i+'()')
-#             return res
-#         return recursion(nums)
-
-# a = Solution()
-# res = a.exchange(3)
-# print(res)
-
-# Definition for a binary tree node.
-class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
-
 class Solution:
-    def isSymmetric(self, root: TreeNode) -> bool:
-        def dfs(l, r):
-            if not l and not r: return True
-            if not l or not r or l.val!=r.val: return False
-            # if l.left and r.right:
-            #     if dfs(l.left, r.right): 
-            #         return True
-            #     else:
-            #         return False
-            # if l.right and r.left:
-            #     if dfs(l.right, r.left): 
-            #         return True
-            #     else:
-            #         return False
-            # # return False
-            return dfs(l.left, r.right) and dfs(l.right, r.left)
-        if not root: return True
-        return dfs(root.left, root.right)
+    def exist(self, board, word):
+        def dfs(idx, i, j):
+            
+            if i<0 or i>=m or j<0 or j>=n or board[i][j]!=word[idx]:
+                return False
+            if idx==len(word)-1:  # 🍓
+                return True
+            tmp, board[i][j] = board[i][j], '-1' 
+            res = dfs(idx+1, i+1, j) or dfs(idx+1, i-1, j) or dfs(idx+1, i, j+1) or dfs(idx+1, i, j-1)
+            board[i][j] = tmp
+            return res
+        if not word: return False
+        m, n = len(board), len(board[0])
+        for i in range(m):
+            for j in range(n):
+                if dfs(0, i, j):
+                    return True
+        return False
 
-t1 = TreeNode(1)
-t2 = TreeNode(2)
-t3 = TreeNode(2)
-t4 = TreeNode(3)
-t5 = TreeNode(4)
-t6 = TreeNode(4)
-t7 = TreeNode(3)
-t1.left, t1.right = t2, t3
-t2.left, t2.right = t4, t5
-t3.left, t3.right = t6, t7
+board = [["C","A","A"],["A","A","A"],["B","C","D"]]
+word = "AAB"
 
 a = Solution()
-res = a.isSymmetric(t1)
+res = a.exist(board, word)
 print(res)
-# res.left.right.val
