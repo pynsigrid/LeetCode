@@ -13,7 +13,7 @@ class Solution:
                 return 0
             used.add((i, j))
             print(used)
-            res = 1+max(dfs(i+1,j,k), dfs(i-1,j,k), dfs(i,j-1,k), dfs(i,j+1,k))
+            res = 1+dfs(i+1,j,k)+dfs(i-1,j,k)+dfs(i,j-1,k)+dfs(i,j+1,k)
             # used.pop()
             return res
         used = set()

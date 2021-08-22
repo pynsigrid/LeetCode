@@ -21,30 +21,26 @@ bt3.left = bt6
 # bt6.left = bt8
 
 class Solution:
-    def pathSum(self, root: BinaryTree, targetSum: int) -> List[List[int]]:
-        if not root: return False
-        self.res, tmp = [], []
-        def dfs(bt, tmp, targetSum):
-            tmp.append(bt.val)
-            targetSum -= bt.val
-            print(tmp, targetSum)
-            if not bt.left and not bt.right:
-#                 tmp.append(bt.val)  # 🍓
-                if targetSum == 0:
-                    self.res.append(tmp.copy())
-                return
-            if bt.left:
-                dfs(bt.left, tmp, targetSum)
-                # print(bt.left.val)
-                # targetSum += cur
+    def pathSum(self, root: BinaryTree, target: int) -> List[List[int]]:
+        def dfs(node, target):
+            if not node.left and not node.right:
+                if target == 0:
+                    res.append(tmp.copy())
+                return res
+            if target < 0: return
+            if node.left:
+                tmp.append(node.left.val)
+                dfs(node.left, target-node.left.val)
                 tmp.pop()
-            if bt.right:
-                dfs(bt.right, tmp, targetSum)
-                # targetSum += bt
+            if node.right:
+                tmp.append(node.right.val)
+                dfs(node.right, target-node.right.val)
                 tmp.pop()
-        dfs(root, tmp, targetSum)
-        return self.res
-
+            return res
+        if not root: return []
+        res, tmp = [], []
+        tmp.append(root.val)
+        return dfs(root, target-root.val)
 
 
 a = Solution()
