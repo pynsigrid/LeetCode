@@ -1,26 +1,27 @@
 class Solution:
-    def exist(self, board, word):
-        def dfs(idx, i, j):
+    def movingCount(self, m: int, n: int, k: int) -> int:
+        def dsum(i):
+            n = 0
+            while i:
+                n += i%10
+                i //= 10
+            return n
+        def dfs(i, j, k):
             
-            if i<0 or i>=m or j<0 or j>=n or board[i][j]!=word[idx]:
-                return False
-            if idx==len(word)-1:  # 🍓
-                return True
-            tmp, board[i][j] = board[i][j], '-1' 
-            res = dfs(idx+1, i+1, j) or dfs(idx+1, i-1, j) or dfs(idx+1, i, j+1) or dfs(idx+1, i, j-1)
-            board[i][j] = tmp
+            if i>=m or i<0 or j>=n or j<0 \
+                or dsum(i)+dsum(j)>k or (i,j) in used:
+                return 0
+            used.add((i, j))
+            print(used)
+            res = 1+max(dfs(i+1,j,k), dfs(i-1,j,k), dfs(i,j-1,k), dfs(i,j+1,k))
+            # used.pop()
             return res
-        if not word: return False
-        m, n = len(board), len(board[0])
-        for i in range(m):
-            for j in range(n):
-                if dfs(0, i, j):
-                    return True
-        return False
+        used = set()
+        return dfs(0,0,k)
 
 board = [["C","A","A"],["A","A","A"],["B","C","D"]]
 word = "AAB"
 
 a = Solution()
-res = a.exist(board, word)
+res = a.movingCount(3,6,5)
 print(res)
