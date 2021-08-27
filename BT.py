@@ -22,16 +22,26 @@ t5.left, t5.right = t8, t9
 
 # bt6.left = bt8
 
-class Solution:
-    def lowestCommonAncestor(self, \
-    root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
         def dfs(node):
-            if not node: return
-            if node.val>p.val and node.val>q.val:
-                return dfs(node.left)  # 记录上一个返回的节点，即最近公共祖先
+            if p.val<=node.val<=q.val or q.val<=node.val<=p.val:
+                return node
+            elif node.val>p.val and node.val>q.val:
+                res = dfs(node.left)
+                return res
             elif node.val<p.val and node.val<q.val:
-                return dfs(node.right)
-            return node  
+                res = dfs(node.right)
+                return res
+            # else:
+            #     return False
+            # return res
         return dfs(root)
 
 
